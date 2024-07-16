@@ -142,6 +142,7 @@ const uint8_t* const sp[] PROGMEM = {
   b50,
 };
 const uint8_t* const chubrik_sp[] PROGMEM = {chubrik, chubrikR, chubrikL, chubrikU, chubrikD};
+
 double vectors[8][3] = { { 20, 20, 20 }, { -20, 20, 20 }, { -20, -20, 20 }, { 20, -20, 20 }, { 20, 20, -20 }, { -20, 20, -20 }, { -20, -20, -20 }, { 20, -20, -20 } };
 double perspective = 100.0f;
 int deltaX, deltaY, deltaZ, iter = 0;
@@ -174,12 +175,25 @@ byte sdvg_ = random(1, 32);
 uint32_t tmr_ = 50;
 uint32_t prd_ = 10;
 
-Rectangle sp_rect[] = { Rectangle(10, 32, 20, 32, sdvg_, tmr_, prd_),
-                        Rectangle(30, 32, 40, 32, sdvg_, tmr_, prd_),
-                        Rectangle(50, 32, 60, 32, sdvg_, tmr_, prd_),
-                        Rectangle(70, 32, 80, 32, sdvg_, tmr_, prd_),
-                        Rectangle(90, 32, 100, 32, sdvg_, tmr_, prd_),
-                        Rectangle(110, 32, 120, 32, sdvg_, tmr_, prd_) };
+Rectangle sp_rect[] = { Rectangle(10, 32, 13, 32, sdvg_, tmr_, prd_),
+                        Rectangle(16, 32, 19, 32, sdvg_, tmr_, prd_),
+                        Rectangle(22, 32, 25, 32, sdvg_, tmr_, prd_),
+                        Rectangle(28, 32, 31, 32, sdvg_, tmr_, prd_),
+                        Rectangle(34, 32, 37, 32, sdvg_, tmr_, prd_),
+                        Rectangle(40, 32, 43, 32, sdvg_, tmr_, prd_),
+                        Rectangle(46, 32, 49, 32, sdvg_, tmr_, prd_),
+                        Rectangle(52, 32, 55, 32, sdvg_, tmr_, prd_),
+                        Rectangle(58, 32, 61, 32, sdvg_, tmr_, prd_),
+                        Rectangle(64, 32, 67, 32, sdvg_, tmr_, prd_),
+                        Rectangle(70, 32, 73, 32, sdvg_, tmr_, prd_), 
+                        Rectangle(76, 32, 79, 32, sdvg_, tmr_, prd_), 
+                        Rectangle(82, 32, 85, 32, sdvg_, tmr_, prd_), 
+                        Rectangle(88, 32, 91, 32, sdvg_, tmr_, prd_), 
+                        Rectangle(94, 32, 97, 32, sdvg_, tmr_, prd_), 
+                        Rectangle(100, 32, 103, 32, sdvg_, tmr_, prd_), 
+                        Rectangle(106, 32, 109, 32, sdvg_, tmr_, prd_), 
+                        Rectangle(112, 32, 115, 32, sdvg_, tmr_, prd_),
+                        Rectangle(118, 32, 121, 32, sdvg_, tmr_, prd_), };
 
 
 void setup() {
@@ -300,7 +314,7 @@ void bezier2() {
     }
   }
   oled.clear();
-  int bez[(amount + 1) * 2];
+  int bez[(amount + 1) * 3];
   for (byte i = 0; i < amount; i++) {
     x[i] += velX[i];
     y[i] += velY[i];
@@ -596,7 +610,7 @@ void menu2() {
 
 void cigare() {
   oled.clear();
-  for (int i=0;i<6;i++) {
+  for (int i=0;i<18;i++) {
     sp_rect[i].set_rect();
     oled.roundRect(sp_rect[i]._rectx0(),sp_rect[i]._recty0(),sp_rect[i]._rectx1(),sp_rect[i]._recty1(),1);
   }

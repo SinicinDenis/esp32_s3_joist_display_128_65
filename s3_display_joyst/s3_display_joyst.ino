@@ -86,9 +86,8 @@ public:
 private:
   byte _x0, _y0, _sprite;
 };
+
 Chubrik chel(64,32);
-
-
 
 const uint8_t* const sp[] PROGMEM = {
   b1,
@@ -261,7 +260,7 @@ void menu() {
   oled.home();
   oled.println("    Net");
   oled.println("BigBall");
-  oled.println("  Аудио");
+  oled.println("Аудио->");
   oled.println("   Cube");
   oled.println("   Ball");
   oled.println(" Чубрик");

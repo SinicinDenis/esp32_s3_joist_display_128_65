@@ -392,7 +392,7 @@ int dist(int x1, int y1, int x2, int y2) {
 
 void bigBall() {
   oled.clear();
-  byte radius = 10;
+  byte radius = random(1,15);
   static int x = (128 / 2) * 10, y = (64 / 2) * 10;
   static int velX = 17, velY = 9;
   static bool fillFlag = 0;
@@ -401,10 +401,12 @@ void bigBall() {
   if (x >= (128 - radius) * 10 || x < radius * 10) {
     velX = -velX;
     fillFlag = !fillFlag;
+    //radius = random(1,15);
   }
   if (y >= (64 - radius) * 10 || y < radius * 10) {
     velY = -velY;
     fillFlag = !fillFlag;
+    //radius = random(1,15);
   }
 
   oled.circle(x / 10, y / 10, radius, fillFlag ? OLED_STROKE : OLED_FILL);

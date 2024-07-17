@@ -260,7 +260,7 @@ void loop() {
       game();
     }
     if (menu_selector == 6) {
-      bezier2();
+      dot_();
     }
     if (menu_selector == 7) {
 
@@ -278,7 +278,7 @@ void menu() {
   oled.println("   Cube");
   oled.println("   Ball");
   oled.println(" Чубрик");
-  oled.println("Bezie 2");
+  oled.println("  Точки");
   oled.println("Воронка");
   oled.setCursorXY(60, menu_selector * 8);
   oled.roundRect(60, menu_selector * 8, 80, menu_selector * 8 + 8, 1);
@@ -296,6 +296,11 @@ void menu() {
   yy = int(menu_selector * 8 + 4 + menu_selector * 5 * sin(angle));
   //oled.circle(xx,yy,1,1);
   oled.drawBitmap(xx - 5, yy - 5, bee, 10, 10);
+  oled.update();
+}
+
+void dot_() {
+  oled.dot(random(1, 128), random(1,64),1);
   oled.update();
 }
 

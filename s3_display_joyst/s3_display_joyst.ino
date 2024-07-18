@@ -55,7 +55,7 @@ private:
 
 class Chubrik {
 public:
-  Chubrik(byte x0, byte y0, byte sprite=0, byte j = 10, bool jumping = false, bool up = false) {
+  Chubrik(byte x0, byte y0, byte sprite=0, byte j = 20, bool jumping = false, bool up = false) {
     _sprite = sprite;
     _x0 = x0;
     _y0 = y0;
@@ -68,25 +68,30 @@ public:
     if (_jumping == false) {_x0 += X;}
     if (_x0 < 1) {_x0 = 1;}
     if (_x0 > 108) {_x0 = 108;}
-    if (Y > 0) {_y0 += Y;} else if (Y < 0 && _jumping==false) {_jumping = true; _up = true;}
+    if (Y >= 0) {_y0 += Y;}
+    if (Y < 0 && _jumping == false) {_jumping = true; _up = true; _y0--;}
+    
+    //if (_j == 20) {_y0--;}
+    if (_jumping) {jump(X);}
     if (_y0 < 1) {_y0 = 1;}
     if (_y0 > 44) {_y0 = 44;}
-    if (_jumping) {jump(X); _y0-=2;}
   }
 
   void jump(int X) {
     
-    if (_y0 == 44) {_jumping = false;} else {
+    if (_y0 == 44) {_jumping = false; _j=20;} else {
       _up? _j--:_j++;
+      _up? _y0 -= 2:_y0 ++;
       if (_j == 0) {_up=false; }
-      _x0 = X;
-      _y0 -= _up;
+      if (_j > 20) {_j = 20; _up=false;}
+      _x0 += X;
     }
   }
 
   bool get_jumping() {return _jumping;}
   void set_jumping(bool jump) {_jumping = jump;}
 
+  byte get_j() {return _j;}
   byte _rectx0() {return _x0;}
   byte _recty0() {return _y0;}
   void _sprite_set(byte sprite_sel) {_sprite = sprite_sel;}
@@ -652,6 +657,7 @@ void game() {
   oled.home();
   oled.println(X);
   oled.println(Y);
+  oled.println(chel.get_j());
   oled.drawBitmap(chel._rectx0(), chel._recty0(), chubrik_sp[chel._sprite_sel()], 20, 20);
   
   oled.update();

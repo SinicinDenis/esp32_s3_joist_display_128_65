@@ -81,7 +81,7 @@ public:
     
     if (_y0 == 44) {_jumping = false; _j=20;} else {
       _up? _j--:_j++;
-      _up? _y0 -= 2:_y0 ++;
+      _up? _y0 -= 2:_y0 += 2;
       if (_j == 0) {_up=false; }
       if (_j > 20) {_j = 20; _up=false;}
       _x0 += X;

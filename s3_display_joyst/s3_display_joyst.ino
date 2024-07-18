@@ -55,36 +55,46 @@ private:
 
 class Chubrik {
 public:
-  Chubrik(byte x0, byte y0, byte sprite=0) {
+  Chubrik(byte x0, byte y0, byte sprite=0, byte j = 10, bool jumping = false, bool up = false) {
     _sprite = sprite;
     _x0 = x0;
     _y0 = y0;
+    _jumping = jumping;
+    _j = j;
+    _up = up;
   }
 
   void set_rect(int X, int Y) {
-    _x0 += X;
+    if (_jumping == false) {_x0 += X;}
     if (_x0 < 1) {_x0 = 1;}
     if (_x0 > 108) {_x0 = 108;}
-    _y0 += Y;
+    if (Y > 0) {_y0 += Y;} else if (Y < 0 && _jumping==false) {_jumping = true; _up = true;}
     if (_y0 < 1) {_y0 = 1;}
     if (_y0 > 44) {_y0 = 44;}
+    if (_jumping) {jump(X); _y0-=2;}
   }
 
-  byte _rectx0() {
-    return _x0;
+  void jump(int X) {
+    
+    if (_y0 == 44) {_jumping = false;} else {
+      _up? _j--:_j++;
+      if (_j == 0) {_up=false; }
+      _x0 = X;
+      _y0 -= _up;
+    }
   }
-  byte _recty0() {
-    return _y0;
-  }
-  void _sprite_set(byte sprite_sel) {
-    _sprite = sprite_sel;
-  }
-  byte _sprite_sel() {
-    return _sprite;
-  }
+
+  bool get_jumping() {return _jumping;}
+  void set_jumping(bool jump) {_jumping = jump;}
+
+  byte _rectx0() {return _x0;}
+  byte _recty0() {return _y0;}
+  void _sprite_set(byte sprite_sel) {_sprite = sprite_sel;}
+  byte _sprite_sel() {return _sprite;}
 
 private:
-  byte _x0, _y0, _sprite;
+  byte _x0, _y0, _sprite, _j;
+  bool _jumping, _up;
 };
 
 Chubrik chel(64,32);

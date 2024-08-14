@@ -2,6 +2,8 @@
 #include <GyverOLED.h>
 #include <SPI.h>
 #include <bitmap.h>
+#include <animation.h>
+
 
 class Rectangle {
 public:
@@ -179,6 +181,7 @@ int xx = 0;
 int yy = 0;
 double angle = 1;
 int itr = 0;
+int itr_a = 0;
 
 int menu_selector = 3;
 bool menu_enter = false;
@@ -293,7 +296,7 @@ void menu() {
   oled.println("   Cube");
   oled.println("   Ball");
   oled.println(" Чубрик");
-  oled.println("  Точки");
+  oled.println("Анимация");
   oled.println("Воронка");
   oled.setCursorXY(60, menu_selector * 8);
   oled.roundRect(60, menu_selector * 8, 80, menu_selector * 8 + 8, 1);
@@ -315,8 +318,14 @@ void menu() {
 }
 
 void dot_() {
-  oled.dot(random(1, 128), random(1,64),1);
+  itr_a++;
+  if (itr_a > 150) {
+    itr_a = 0;
+  }
+  oled.clear();
+  oled.drawBitmap(0, 0, sp_animation[itr_a], 128, 64);
   oled.update();
+  delay(50);
 }
 
 void bezier2() {

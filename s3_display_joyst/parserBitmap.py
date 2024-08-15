@@ -5,7 +5,7 @@
 '''
 
 import time
-from bs4 import BeautifulSoup
+#from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 import xlsxwriter
@@ -27,31 +27,25 @@ def get_source(url):
         time.sleep(1)  # время на загрузку страницы
         process_b = driver.find_element(By.XPATH,'/html/body/div[3]/div[2]/div[9]/select')
         process_b.click()
-        horizont_b = driver.find_element(By.XPATH,'/ html / body / div[3] / div[2] / div[9] / select / option[3]')
+        horizont_b = driver.find_element(By.XPATH,'/ html / body / div[3] / div[2] / div[9] / select / option[4]')
         horizont_b.click()
         st = 'const uint8_t* const sp_animation[] PROGMEM = {'
         for root, dirs, files in os.walk('C:/tmp_/'):
             for file in files:
-                #print(os.path.join(root, file))
                 file_in_pars = driver.find_element(By.CLASS_NAME, "ui_file_chooser")
                 file_in_pars.send_keys(os.path.join(root, file))
+                time.sleep(2.5)
                 button_pars = driver.find_element(By.XPATH, '/html/body/div[3]/div[2]/div[12]/button[1]')
                 button_pars.click()
-                time.sleep(2)
                 st_parse = pyperclip.paste()
                 with open('animation.h', 'a') as output_file:
-                    # Вставляем текст из буфера в файл
                     output_file.write(st_parse)
                     output_file.write('\n')
                 st += st_parse[14:26] + ', '
         st += '};'
         with open('animation.h', 'a') as output_file:
             output_file.write('\n')
-            # Вставляем текст из буфера в файл
             output_file.write(st)
-
-        #time.sleep(10)
-
     except:
         print('! 1 ! ! 1 ! !')
 

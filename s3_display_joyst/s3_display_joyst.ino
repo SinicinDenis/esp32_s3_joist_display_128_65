@@ -3,7 +3,9 @@
 #include <SPI.h>
 #include <bitmap.h>
 #include <animation.h>
-
+#include <spiral.h>
+#include <spiral_1.h>
+#include <star.h>
 
 class Rectangle {
 public:
@@ -192,6 +194,8 @@ unsigned long timer;
 byte sdvg_ = random(1, 32);
 uint32_t tmr_ = 50;
 uint32_t prd_ = 10;
+int menu_an = 0;
+byte spiral_i = 0;
 
 Rectangle sp_rect[] = { Rectangle(10, 32, 13, 32, sdvg_, tmr_, prd_),
                         Rectangle(16, 32, 19, 32, sdvg_, tmr_, prd_),
@@ -245,8 +249,16 @@ void loop() {
     if (menu_enter == false) {
       if (Y > 0) { menu_selector -= 1; }
       if (Y < 0) { menu_selector += 1; }
+
       if (menu_selector < 0) { menu_selector = 0; }
       if (menu_selector > 7) { menu_selector = 7; }
+
+      if (X > 0) { menu_an += 1; delay(50);}
+      if (X < 0) { menu_an -= 1; delay(50);}
+
+      if (menu_an < 0) { menu_an = 0; }
+      if (menu_an > 9) { menu_an = 9; }
+      
     }
 
 
@@ -296,7 +308,8 @@ void menu() {
   oled.println("   Cube");
   oled.println("   Ball");
   oled.println(" Чубрик");
-  oled.println("Анимация");
+  oled.print("Анимац ");
+  oled.println(menu_an);
   oled.println("Воронка");
   oled.setCursorXY(60, menu_selector * 8);
   oled.roundRect(60, menu_selector * 8, 80, menu_selector * 8 + 8, 1);
@@ -318,15 +331,48 @@ void menu() {
 }
 
 void dot_() {
-  itr_a++;
-  if (itr_a > 150) {
-    itr_a = 0;
-  }
-  oled.clear();
-  oled.drawBitmap(0, 0, sp_animation[itr_a], 128, 64);
-  oled.update();
-  delay(50);
+  if (menu_an == 0) {
+    itr_a++;
+    if (itr_a > 150) {
+      itr_a = 0;
+    }
+    oled.clear();
+    oled.drawBitmap(0, 0, sp_animation[itr_a], 128, 64);
+    oled.update();
+    delay(50);}
+  
+  if (menu_an == 1) {
+    spiral_i++;
+    if (spiral_i > 24) {
+      spiral_i = 0;
+    }
+    oled.clear();
+    oled.drawBitmap(0, 0, vecteezy_a_list_pgm[spiral_i], 128, 64);
+    oled.update();
+    delay(50);}
+  
+  if (menu_an == 2) {
+    spiral_i++;
+    if (spiral_i > 24) {
+      spiral_i = 0;
+    }
+    oled.clear();
+    oled.drawBitmap(0, 0, vect_list_pgm[spiral_i], 128, 64);
+    oled.update();
+    delay(100);}
+  
+  if (menu_an == 3) {
+    spiral_i++;
+    if (spiral_i > 12) {
+      spiral_i = 0;
+    }
+    oled.clear();
+    oled.drawBitmap(0, 0, star_list_pgm[spiral_i], 128, 64);
+    oled.update();
+    delay(50);}
 }
+
+
 
 void bezier2() {
   const byte amount = 3;
